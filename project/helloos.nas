@@ -36,6 +36,7 @@ entry:
 
 putloop:
 		MOV		AL,[SI]
+		HLT
 		ADD		SI,1			; 给SI加1
 		CMP		AL,0
 		JE		fin

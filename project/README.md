@@ -4,12 +4,12 @@
 
 ## 运行方法
 
-1. 双击asm.bat将helloos.nas生成helloos.img
-2. 双击run.bat或者双击cmd输入run运行系统。
+1. 双击asm.bat或者双击cmd输入asm 将helloos.nas生成helloos.img
+2. 双击run.bat或者双击cmd输入run 运行系统。
 
 ## 当前说明
 
-将程序主体中核心部分的代码用汇编修改，写成更简单更易懂的形式。
+为了更好的理解作者说的HLT，我在putloop函数中加入了HLT，这样在打印hello world的时候会产生卡顿输出的效果。
 
 # 必备知识点
 
