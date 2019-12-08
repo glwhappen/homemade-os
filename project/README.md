@@ -2,9 +2,9 @@
 
 ## 运行方法
 
-- 双击run.bat即可运行
-- 或者双击cmd，然后输入run
+1. 双击asm.bat将helloos.nas生成helloos.img
+2. 双击run.bat或者双击cmd输入run运行系统。
 
 ## 当前说明
 
-直接用二进制编辑器写的一个系统镜像，在虚拟机中运行后，可以输出一个hello world
+用汇编改写，用更少的代码实现了同样的功能，在虚拟机中运行后，可以输出一个hello world
