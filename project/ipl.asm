@@ -75,6 +75,11 @@ next:
 		ADD		CH,1
 		CMP		CH,CYLS
 		JB		readloop		; CH < CYLS, 则跳转到readloop
+
+; 读完盘以后执行haribote.sys！
+		MOV		[0x0ff0],CH		; 把IPL读到哪里做个笔记，CYLS读到的地方存一下
+		JMP		0xc200
+		
 fin:
 		HLT						; 让CPU停止，等待指令
 		JMP		fin				; 无限循环
