@@ -6,11 +6,23 @@
 
 ## 当前说明
 
-32位模式前期准备 
+开始导入 C语言
 
-如果用32位模式就不能调用BIOS功能了。这是因为BIOS是用16位机器语言写的。如 果我们有什么事情想用BIOS来做，那就全部都放在开头先做，因为一旦进入32位模式就不能调 用BIOS函数了
+haribote.asm也随之改成了asmhead.asm。并且， 为了调用C语言写的程序，添加了100行左右的汇编代码。 设计的问题有点多，就先不管了，直接放上去
 
-再回头说说要使用BIOS做的事情。画面模式的设定已经做完了，接下来还想从BIOS得到键 盘状态。所谓键盘状态，是指NumLock是ON还是OFF等这些状态。 
+naskfunc.asm是用汇编语言写的函数
+
+### 这个bootpack.c是怎样变成机器语言的呢？
+
+首先，使用cc1.exe从bootpack.c生成bootpack.gas。
+
+第二步，使用gas2nask.exe从bootpack.gas生成bootpack.nas。
+
+第三步，使用nask.exe从bootpack.nas生成bootpack.obj。
+
+第四步，使用obi2bim.exe从bootpack.obj生成bootpack.bim。 
+
+最后，使用bim2hrb.exe从bootpack.bim生成bootpack.hrb。
 
 # 必备知识点
 
