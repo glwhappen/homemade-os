@@ -1,5 +1,6 @@
 ; hello-os
 ; TAB=4 推荐TAB是4
+CYLS	EQU		10				; 读到10个柱面 EQU equal 相当于 #define CYLS 10
 		ORG		0x7c00			; 指明程序的装载地址
 
 ; 以下这段是标准FAT12格式专用的代码
@@ -40,15 +41,40 @@ entry:
 		MOV		DH,0			; 磁头0
 		MOV		CL,2			; 扇区2
 
+readloop:
+		MOV		SI,0
+
+retry:
 		MOV		AH,0x02			; AH=0x02 : 读盘
 		MOV		AL,1			; 1个扇区
 		MOV		BX,0
 		MOV		DL,0x00			; A驱动器
 		INT		0x13			; 调用磁盘BIOS
-		JC		error			;正常情况下进位表示会返回0，如果返回1说明执行失败，可以改位JNC体验一下失败的感觉
-
+		JNC		next			; 没出错的话就跳转到next
+		ADD		SI,1			; 出错就SI++
+		CMP		SI,5			; SI与5比较
+		JAE		error			; SI >= 5是，跳转到error
 		
+		MOV		AH,0x00			; 系统复位
+		MOV		DL,0x00			
+		INT		0x13			; 重置驱动器
+		JMP		retry
 		
+next:
+		MOV		AX,ES			; 把内存地址往后移0x200   我感觉这里因该是0x020
+		ADD		AX,0x0020		; 0x20是16进制下512/16的结果
+		MOV		ES,AX			; 因为没有ADD ES,0x020指令，所以这里稍微绕个弯
+		ADD		CL,1			; 往CL里加1
+		CMP		CL,18			; 比较CL与18
+		JBE		readloop		; 如果CL <= 18 就跳转至readloop
+		MOV		CL,1
+		ADD		DH,1
+		CMP		DH,2
+		JB		readloop		; 如果DH < 2, 则跳转到readloop
+		MOV		DH,0
+		ADD		CH,1
+		CMP		CH,CYLS
+		JB		readloop		; CH < CYLS, 则跳转到readloop
 fin:
 		HLT						; 让CPU停止，等待指令
 		JMP		fin				; 无限循环
@@ -58,6 +84,7 @@ error:
 		
 putloop:
 		MOV		AL,[SI]
+		HLT
 		ADD		SI,1			; 给SI加1
 		CMP		AL,0
 		JE		fin
@@ -73,5 +100,5 @@ msg:
 		DB		0
 		
 		RESB	0x7dfe-$		; 填写0x00,直到 0x001fe 
-		; 第一个扇区的最后两个字节，只有是0x55AA的时候，计算机才会确认这个磁盘时启动盘
-		DB		0x55, 0xaa		
+		
+		DB		0x55, 0xaa		; 第一个扇区的最后两个字节，只有是0x55AA的时候，计算机才会确认这个磁盘时启动盘
