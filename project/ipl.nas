@@ -30,13 +30,34 @@ entry:
 		MOV		AX,0			; 初始化寄存器
 		MOV		SS,AX
 		MOV		SP,0x7c00
-		MOV		DS,AX
-		MOV		ES,AX
-		MOV		SI,msg
+		MOV		DS,AX			; 段寄存器初始化的高位初始化为0
 
+; 读磁盘
+
+		MOV		AX,0x0820
+		MOV		ES,AX
+		MOV		CH,0			; 柱面0
+		MOV		DH,0			; 磁头0
+		MOV		CL,2			; 扇区2
+
+		MOV		AH,0x02			; AH=0x02 : 读盘
+		MOV		AL,1			; 1个扇区
+		MOV		BX,0
+		MOV		DL,0x00			; A驱动器
+		INT		0x13			; 调用磁盘BIOS
+		JC		error			;正常情况下进位表示会返回0，如果返回1说明执行失败，可以改位JNC体验一下失败的感觉
+
+		
+		
+fin:
+		HLT						; 让CPU停止，等待指令
+		JMP		fin				; 无限循环
+
+error:
+		MOV		SI,msg
+		
 putloop:
 		MOV		AL,[SI]
-		HLT
 		ADD		SI,1			; 给SI加1
 		CMP		AL,0
 		JE		fin
@@ -45,13 +66,9 @@ putloop:
 		INT		0x10			; 调用显卡BIOS
 		JMP		putloop
 
-fin:
-		HLT						; 让CPU停止，等待指令
-		JMP		fin				; 无限循环
-
 msg:
 		DB		0x0a, 0x0a		; 换行2次
-		DB		"HELLO WORLD"
+		DB		"load error"
 		DB		0x0a			; 换行
 		DB		0
 		
