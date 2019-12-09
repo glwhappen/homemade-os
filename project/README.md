@@ -2,13 +2,11 @@
 
 ## 运行方法
 
-1. 双击asm.bat或者双击cmd输入asm 将ipl.nas生成ipl.lst 和 ipl.bin
-2. 双击makeimg.bat或者双击cmd输入makeimg 将ipl.bin制作为helloos.img
-3. 双击run.bat或者双击cmd输入run 运行系统。
+1. 双击cmd，输入make run
 
 ## 当前说明
 
-将启动代码单独分离，制作成启动分区
+之前的运行方法已经变的非常臃肿了，每次都需要经理好几个步骤才能运行系统，所以用Makefile来进行管理（Makefile就像是一个非常聪明的批处理文件)，每次运行只需要简单的一个命令，会智能的编译当前需要的文件。
 
 # 必备知识点
 
