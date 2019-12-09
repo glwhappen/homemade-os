@@ -1,15 +1,14 @@
-[TOC]
-
 # 第二天
 
 ## 运行方法
 
-1. 双击asm.bat或者双击cmd输入asm 将helloos.nas生成helloos.img
-2. 双击run.bat或者双击cmd输入run 运行系统。
+1. 双击asm.bat或者双击cmd输入asm 将ipl.nas生成ipl.lst 和 ipl.bin
+2. 双击makeimg.bat或者双击cmd输入makeimg 将ipl.bin制作为helloos.img
+3. 双击run.bat或者双击cmd输入run 运行系统。
 
 ## 当前说明
 
-为了更好的理解作者说的HLT，我在putloop函数中加入了HLT，这样在打印hello world的时候会产生卡顿输出的效果。
+将启动代码单独分离，制作成启动分区
 
 # 必备知识点
 
