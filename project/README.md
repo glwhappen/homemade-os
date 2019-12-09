@@ -1,4 +1,4 @@
-# 第三天
+# 第四天
 
 ## 运行方法
 
@@ -6,23 +6,9 @@
 
 ## 当前说明
 
-开始导入 C语言
+开始往屏幕上显示内容
 
-haribote.asm也随之改成了asmhead.asm。并且， 为了调用C语言写的程序，添加了100行左右的汇编代码。 设计的问题有点多，就先不管了，直接放上去
-
-naskfunc.asm是用汇编语言写的函数
-
-### 这个bootpack.c是怎样变成机器语言的呢？
-
-首先，使用cc1.exe从bootpack.c生成bootpack.gas。
-
-第二步，使用gas2nask.exe从bootpack.gas生成bootpack.nas。
-
-第三步，使用nask.exe从bootpack.nas生成bootpack.obj。
-
-第四步，使用obi2bim.exe从bootpack.obj生成bootpack.bim。 
-
-最后，使用bim2hrb.exe从bootpack.bim生成bootpack.hrb。
+简单的显示颜色，在naskfunc中写了对应的几个绘制函数，然后再bootpack.c中实战了一下，绘制出了好看的colorful矩形
 
 # 必备知识点
 
