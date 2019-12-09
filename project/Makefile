@@ -12,8 +12,8 @@ default :
 
 # 生成规则
 
-ipl.bin : ipl.nas Makefile
-	$(NASK) ipl.nas ipl.bin ipl.lst
+ipl.bin : ipl.asm Makefile
+	$(NASK) ipl.asm ipl.bin ipl.lst
 
 haribote.img : ipl.bin Makefile
 	$(EDIMG)   imgin:../tolset/z_tools/fdimg0at.tek \
