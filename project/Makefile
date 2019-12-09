@@ -31,10 +31,12 @@ run :
 	$(MAKE) img
 	$(COPY) haribote.img ..\tolset\z_tools\qemu\fdimage0.bin
 	$(MAKE) -C ../tolset/z_tools/qemu
+	$(MAKE) clean
 
 clean :
 	-$(DEL) ipl.bin
 	-$(DEL) ipl.lst
+	-$(DEL) haribote.img
 
 src_only :
 	$(MAKE) clean
